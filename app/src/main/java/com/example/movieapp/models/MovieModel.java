@@ -4,12 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class MovieModel implements Parcelable {
-    private String title;
-    private String poster_path;
-    private String release_date;
-    private int movie_id;
-    private float vote_average;
-    private String movie_overview;
+    private final String title;
+    private final String poster_path;
+    private final String release_date;
+    private final int movie_id;
+    private final float vote_average;
+    private final String movie_overview;
 
     public MovieModel(String title, String poster_path, String release_date, int movie_id, float vote_average, String movie_overview) {
         this.title = title;
