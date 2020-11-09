@@ -17,7 +17,7 @@ public class Servicey {
 
     private static final MovieApi movieApi = retrofit.create(MovieApi.class);
 
-    public MovieApi getMovieApi() {
+    public static MovieApi getMovieApi() {
         return movieApi;
     }
 
