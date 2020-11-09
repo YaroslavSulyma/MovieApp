@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.movieapp.models.MovieModel;
 import com.example.movieapp.request.Servicey;
+import com.example.movieapp.response.MovieResponse;
 import com.example.movieapp.response.MovieSearchResponse;
 import com.example.movieapp.utils.Credentials;
 import com.example.movieapp.utils.MovieApi;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getRetrofitResponse();
+                getRetrofitResponseAccordingToID();
             }
         });
     }
@@ -71,6 +72,36 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getRetrofitResponseAccordingToID() {
+        MovieApi movieApi = Servicey.getMovieApi();
+
+        Call<MovieModel> responseCall = movieApi.getMovie(
+                343611,
+                Credentials.API_KEY
+        );
+
+        responseCall.enqueue(new Callback<MovieModel>() {
+            @Override
+            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+                if (response.code() == 200) {
+                    MovieModel movie = response.body();
+                    Log.v("Tag", "The response of the movie " + movie.getTitle());
+                } else {
+                    try {
+                        Log.v("Tag", "ERROR");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieModel> call, Throwable t) {
 
             }
         });
