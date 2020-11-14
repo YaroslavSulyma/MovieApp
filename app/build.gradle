@@ -28,6 +28,7 @@ android {
 }
 
 dependencies {
+    def lifecycle_version = "2.2.0"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
@@ -39,4 +40,7 @@ dependencies {
     //Retrofit 2
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.6.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
 }
