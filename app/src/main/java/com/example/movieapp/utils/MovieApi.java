@@ -1,7 +1,6 @@
 package com.example.movieapp.utils;
 
 import com.example.movieapp.models.MovieModel;
-import com.example.movieapp.response.MovieResponse;
 import com.example.movieapp.response.MovieSearchResponse;
 
 import retrofit2.Call;
@@ -17,7 +16,7 @@ public interface MovieApi {
     Call<MovieSearchResponse> searchMovie(
             @Query("api_key") String key,
             @Query("query") String query,
-            @Query("page") String page
+            @Query("page") int page
     );
 
     //Making search with id
