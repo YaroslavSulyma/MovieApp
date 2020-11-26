@@ -40,25 +40,50 @@ public class MovieListActivity extends AppCompatActivity {
 
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
+        //Calling the observers
+        observeAnyChange();
+
+        //Testing the method
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchMovieApi("Fast", 1);
+            }
+        });
 
     }
 
-    private void observeAnyChange(){
+    //Observing any changes
+    private void observeAnyChange() {
         movieListViewModel.getMovies().observe(this, new Observer<List<MovieModel>>() {
             @Override
             public void onChanged(List<MovieModel> movieModels) {
-
+                //observing for any data changes
+                if (movieModels != null) {
+                    for (MovieModel movieModel : movieModels) {
+                        //Get the data
+                        Log.v("Tag","onChanged:" + movieModel.getTitle());
+                    }
+                }
             }
         });
     }
 
-    private void getRetrofitResponse() {
+    //4- Calling method in Main Activity
+    private void searchMovieApi(String query, int pageNumber) {
+        movieListViewModel.searchMovieApi(query, pageNumber);
+    }
+
+
+
+
+    /*private void getRetrofitResponse() {
         MovieApi movieApi = Servicey.getMovieApi();
 
         Call<MovieSearchResponse> responseCall = movieApi.searchMovie(
                 Credentials.API_KEY,
                 "Jack Reacher",
-                "1"
+                1
         );
 
         responseCall.enqueue(new Callback<MovieSearchResponse>() {
@@ -116,5 +141,5 @@ public class MovieListActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 }
