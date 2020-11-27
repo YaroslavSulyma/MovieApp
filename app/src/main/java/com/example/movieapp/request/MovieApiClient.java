@@ -5,18 +5,15 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.example.movieapp.AppExecutors;
 import com.example.movieapp.models.MovieModel;
 import com.example.movieapp.response.MovieSearchResponse;
 import com.example.movieapp.utils.Credentials;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -43,6 +40,7 @@ public class MovieApiClient {
         return mMovies;
     }
 
+    //1-This method we are going to call trough the classes
     public void searchMovieApi(String query, int pageNumber) {
         if (retrieveMoviesRunnable != null) {
             retrieveMoviesRunnable = null;
@@ -57,7 +55,7 @@ public class MovieApiClient {
                 //cancelling the retrofit call
                 myHandler.cancel(true);
             }
-        }, 5000, TimeUnit.MICROSECONDS);
+        }, 3000, TimeUnit.MILLISECONDS);
     }
 
     // retrieving data from RestAPI by runnable classes
