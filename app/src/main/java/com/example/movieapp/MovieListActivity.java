@@ -1,6 +1,7 @@
 package com.example.movieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.example.movieapp.viewModels.MovieListViewModel;
 import java.util.List;
 
 public class MovieListActivity extends AppCompatActivity implements IOnMovieListener {
+
     //Recycler View
 
     private RecyclerView recyclerView;
@@ -29,6 +31,9 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mive_list);
+        //Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recycler_view);
 
