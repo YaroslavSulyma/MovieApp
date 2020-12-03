@@ -1,6 +1,7 @@
 package com.example.movieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,6 +36,8 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //SearchView
+        setupSearchView();
         recyclerView = findViewById(R.id.recycler_view);
 
 
@@ -43,8 +46,6 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
         //Calling the observers
         observeAnyChange();
         configureRecyclerView();
-
-        searchMovieApi("Fast", 1);
 
     }
 
@@ -66,10 +67,6 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
         });
     }
 
-    //4- Calling method in Main Activity
-    private void searchMovieApi(String query, int pageNumber) {
-        movieListViewModel.searchMovieApi(query, pageNumber);
-    }
 
     //5-initialising Recycler View
     private void configureRecyclerView() {
@@ -80,7 +77,8 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
 
     @Override
     public void onMovieListener(int position) {
-        Toast.makeText(this, "The position is: " + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "The position is: " + position, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -155,4 +153,21 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
             }
         });
     }*/
+
+    //Get data from searchView & query the api to get the results (Movies)
+    private void setupSearchView() {
+        final SearchView searchView = findViewById(R.id.search_movie);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                movieListViewModel.searchMovieApi(query, 1);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
 }
