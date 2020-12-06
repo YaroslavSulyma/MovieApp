@@ -1,5 +1,6 @@
 package com.example.movieapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -73,12 +75,28 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
         movieRecyclerViewAdapter = new MovieRecyclerView(this);
         recyclerView.setAdapter(movieRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //RecyclerView pagination
+        //loading next pages of api response
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    // here we need to display the next search result on the page of api
+                    movieListViewModel.searchNextpage();
+                }
+            }
+        });
     }
 
     @Override
     public void onMovieListener(int position) {
         //Toast.makeText(this, "The position is: " + position, Toast.LENGTH_SHORT).show();
-
+        Intent intent = new Intent(this, MovieDetails.class);
+        intent.putExtra("movie", movieRecyclerViewAdapter.getSelectedMovie(position));
+        startActivity(intent);
     }
 
     @Override
