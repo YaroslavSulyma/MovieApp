@@ -18,8 +18,6 @@ public class MovieDetails extends AppCompatActivity {
     private RatingBar ratingBarDetails;
     private TextView titleDetails, descriptionDetails;
 
-    private MovieRepository movieRepository;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,7 @@ public class MovieDetails extends AppCompatActivity {
             descriptionDetails.setText(movieModel.getMovie_overview());
             ratingBarDetails.setRating(movieModel.getVote_average() / 2);
 
-            Glide.with(this).load("https://image.tmdb.org/t/t/p/w500" + movieModel.getPoster_path()).into(imageViewDetails);
+            Glide.with(this).load("https://image.tmdb.org/t/p/w500" + movieModel.getPoster_path()).into(imageViewDetails);
         }
     }
 
