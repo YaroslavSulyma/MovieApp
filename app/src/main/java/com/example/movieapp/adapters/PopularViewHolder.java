@@ -3,14 +3,13 @@ package com.example.movieapp.adapters;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieapp.R;
 
-public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class PopularViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     //Widgets
     ImageView imageView;
@@ -19,7 +18,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
     //Click Listener
     IOnMovieListener iOnMovieListener;
 
-    public MovieViewHolder(@NonNull View itemView, IOnMovieListener iOnMovieListener) {
+    public PopularViewHolder(@NonNull View itemView, IOnMovieListener iOnMovieListener) {
         super(itemView);
 
         this.iOnMovieListener = iOnMovieListener;

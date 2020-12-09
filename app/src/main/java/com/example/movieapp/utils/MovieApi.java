@@ -19,6 +19,14 @@ public interface MovieApi {
             @Query("page") int page
     );
 
+    //Popular movies
+    //https://api.themoviedb.org/3/movie/popular?api_key=f06128b33c066b5ca05e964387c3d654&page=1
+    @GET("3/movie/popular?")
+    Call<MovieSearchResponse> getPopular(
+            @Query("api_key") String key,
+            @Query("page") int page
+    );
+
     //Making search with id
     //https://api.themoviedb.org/3/movie/343611?api_key=f06128b33c066b5ca05e964387c3d654
     //Remember that  movie_id=550 is for Jack Reacher

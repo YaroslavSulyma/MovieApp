@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="choose_a_movie_for_today">Choose a movie for today?</string>
 </resources>
