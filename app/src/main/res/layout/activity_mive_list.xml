@@ -6,14 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".MovieListActivity">
 
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="serif"
+        android:text="@string/choose_a_movie_for_today"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:background="@color/design_default_color_primary"
         style="@style/ThemeOverlay.AppCompat.Light"
+
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_margin="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -21,7 +36,6 @@
             android:id="@+id/search_movie"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-
             app:queryHint="Looking for a movie?" />
     </androidx.appcompat.widget.Toolbar>
 

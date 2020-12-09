@@ -31,11 +31,20 @@ public class MovieRepository {
         return movieApiClient.getMovies();
     }
 
+    public LiveData<List<MovieModel>> getPop() {
+        return movieApiClient.getMoviesPop();
+    }
+
     //2-Calling the method
     public void searchMovieApi(String query, int pageNumber) {
         mQuery = query;
         mPageNumber = pageNumber;
         movieApiClient.searchMovieApi(query, pageNumber);
+    }
+
+    public void searchMoviePop(int pageNumber) {
+        mPageNumber = pageNumber;
+        movieApiClient.searchMovieApiPop(pageNumber);
     }
 
     public void searchNextPage() {

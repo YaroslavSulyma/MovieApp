@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.movieapp.adapters.IOnMovieListener;
 import com.example.movieapp.adapters.MovieRecyclerView;
@@ -28,7 +29,10 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
     private RecyclerView recyclerView;
     private MovieRecyclerView movieRecyclerViewAdapter;
 
+    //View Model
     private MovieListViewModel movieListViewModel;
+
+    boolean isPopular = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,27 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
         //Calling the observers
         observeAnyChange();
         configureRecyclerView();
+        observePopularMovies();
 
+        // Getting popular movies
+        movieListViewModel.searchMoviePop(1);
+    }
+
+    private void observePopularMovies() {
+        movieListViewModel.getPop().observe(this, new Observer<List<MovieModel>>() {
+            @Override
+            public void onChanged(List<MovieModel> movieModels) {
+                //observing for any data changes
+                if (movieModels != null) {
+                    for (MovieModel movieModel : movieModels) {
+                        //Get the data
+                        Log.v("Tag", "onChanged:" + movieModel.toString());
+
+                        movieRecyclerViewAdapter.setmMovies(movieModels);
+                    }
+                }
+            }
+        });
     }
 
     //Observing any changes
@@ -74,7 +98,7 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
     private void configureRecyclerView() {
         movieRecyclerViewAdapter = new MovieRecyclerView(this);
         recyclerView.setAdapter(movieRecyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         //RecyclerView pagination
         //loading next pages of api response
@@ -85,7 +109,7 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
 
                 if (!recyclerView.canScrollVertically(1)) {
                     // here we need to display the next search result on the page of api
-                    movieListViewModel.searchNextpage();
+                    movieListViewModel.searchNextPage();
                 }
             }
         });
@@ -104,74 +128,6 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
 
     }
 
-
-
-    /*private void getRetrofitResponse() {
-        MovieApi movieApi = Servicey.getMovieApi();
-
-        Call<MovieSearchResponse> responseCall = movieApi.searchMovie(
-                Credentials.API_KEY,
-                "Jack Reacher",
-                1
-        );
-
-        responseCall.enqueue(new Callback<MovieSearchResponse>() {
-            @Override
-            public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
-                if (response.code() == 200) {
-                    Log.v("Tag", "the response " + response.body().toString());
-
-                    List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
-
-                    for (MovieModel movie : movies) {
-                        Log.v("Tag", "The list " + movie.getRelease_date());
-                    }
-                } else {
-                    try {
-                        Log.v("Tag", "ERROR" + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void getRetrofitResponseAccordingToID() {
-        MovieApi movieApi = Servicey.getMovieApi();
-
-        Call<MovieModel> responseCall = movieApi.getMovie(
-                343611,
-                Credentials.API_KEY
-        );
-
-        responseCall.enqueue(new Callback<MovieModel>() {
-            @Override
-            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
-                if (response.code() == 200) {
-                    MovieModel movie = response.body();
-                    Log.v("Tag", "The response of the movie " + movie.getTitle());
-                } else {
-                    try {
-                        Log.v("Tag", "ERROR");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieModel> call, Throwable t) {
-
-            }
-        });
-    }*/
-
     //Get data from searchView & query the api to get the results (Movies)
     private void setupSearchView() {
         final SearchView searchView = findViewById(R.id.search_movie);
@@ -185,6 +141,13 @@ public class MovieListActivity extends AppCompatActivity implements IOnMovieList
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPopular = false;
             }
         });
     }
